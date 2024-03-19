@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: blackduck-source-scan
+spec:
+  steps:
+    - args:
+        - >-
+          echo "blackduck source scan"
+      command:
+        - /bin/bash
+        - '-c'
+      image: 'quay.io/openshift/origin-cli:latest'
+      name: blackduck-source-scan
+      resources: {}
