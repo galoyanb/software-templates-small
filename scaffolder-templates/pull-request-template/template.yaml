@@ -27,6 +27,9 @@ spec:
           title: Target Path in repo
           type: string
           description: Name of the directory to create in the repository
+        dockerfile:
+          title: Include Dockerfile
+          type: boolean
     - title: Choose a location
       required:
         - repo
@@ -63,6 +66,14 @@ spec:
         url: ./template
         values:
           name: ${{parameters.name}}
+        targetPath: ./workspace
+
+    - id: fetch-dockerfile
+      name: Fetch Dockerfile
+      if: ${{ parameters.dockerfile }}
+      action: fetch:template
+      input:
+        url: ./dockerfile
         targetPath: ./workspace
 
     - id: publish
