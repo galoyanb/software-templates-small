@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: scaffolder-templates
+spec:
+  type: url
+  targets:
+    - https://github.com/idp-team/software-templates/blob/master/scaffolder-templates/pull-request-template/template.yaml
