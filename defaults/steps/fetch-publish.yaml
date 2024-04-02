@@ -1,0 +1,21 @@
+- id: fetch-base
+  name: Fetch Base
+  action: fetch:template
+  input:
+    url: ../../defaults/skeletons/catalog-info
+    values:
+      name: ${{parameters.name}}
+    targetPath: ./workspace
+- id: publish
+  name: Publish
+  action: publish:gitlab:merge-request
+  input:
+    sourcePath: ./workspace
+    repoUrl: ${{parameters.repo.host}}?repo=${{parameters.repo.name}}&owner=${{parameters.repo.owner}}
+    title: "Create new project: ${{parameters.name}}"
+    branchName: create-${{parameters.name}}
+    description: |
+      # New project: ${{parameters.name}}
+
+      ${{ parameters.description if parameters.description }}
+    targetPath: ${{ parameters.targetPath if parameters.targetPath else parameters.name }}
