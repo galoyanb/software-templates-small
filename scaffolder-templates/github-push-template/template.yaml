@@ -1,0 +1,112 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: github-push-template
+  title: GitHub Push template
+  description: scaffolder v1beta3 template demo publishing to PR on existing git repository
+spec:
+  owner: backstage/techdocs-core
+  type: service
+  parameters:
+    - title: Fill in some steps
+      required:
+        - name
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Unique name of the component
+          ui:field: EntityNamePicker
+          ui:autofocus: true
+        description:
+          title: Description
+          type: string
+          description: Description of the component
+        targetPath:
+          title: Target Path in repo
+          type: string
+          description: Name of the directory to create in the repository
+        namespace:
+          title: Create Namespace
+          default: True
+          enum:
+            - True
+            - False
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            catalogFilter:
+              - kind: Group
+
+      dependencies:
+        namespace:
+          oneOf:
+            - properties:
+                namespace:
+                  enum:
+                    - True
+                smi:
+                  title: SMI
+                  type: string
+                  description: SMI Number
+            - properties:
+                namespace:
+                  enum:
+                    - False
+                projectName:
+                  title: Name of Existing Namespace
+                  type: string
+                
+    - title: Choose a location
+      required:
+        - repo
+      properties:
+        repo:
+          title: Repository Location
+          type: object
+          properties:
+            host:
+              title: Repo Host
+              type: string
+              description: Your SCM host
+              default: gitlab-gitlab.apps.cluster-q7zfx.sandbox2589.opentlc.com
+              # enum:
+              #   - gitlab-gitlab.apps.cluster-q7zfx.sandbox2589.opentlc.com
+            owner:
+              title: Repo Owner
+              type: string
+              description: Your SCM host organization/group
+              default: development
+              # enum:
+              #   - development
+            name:
+              title: Repo Name
+              type: string
+              description: Your SCM host name
+
+  steps:
+    - id: fetch-base
+      name: Fetch Base
+      action: fetch:template
+      input:
+        url: ./scaffolder-skeletons/test-skeleton
+        values:
+          name: ${{parameters.name}}
+        targetPath: ./workspace
+
+    - id: push
+      name: Publish
+      action: github:repo:push
+      input:
+        sourcePath: ./workspace
+        repoUrl: ${{parameters.repo.host}}?repo=${{parameters.repo.name}}&owner=${{parameters.repo.owner}}
+        branchName: test
+        commitMessage: test
+
+  output:
+    links:
+      - url: ${{steps.publish.output.mergeRequestUrl}}ßß
+        title: "Go to PR"
