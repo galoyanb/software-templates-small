@@ -7,3 +7,4 @@ spec:
   targets:
     - https://github.com/idp-team/software-templates/blob/master/scaffolder-templates/pull-request-template/template.yaml
     - https://github.com/idp-team/software-templates/blob/master/scaffolder-templates/github-push-template/template.yaml
+    - https://github.com/idp-team/software-templates/blob/master/scaffolder-templates/quarkus-web-template/template.yaml
