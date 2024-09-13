@@ -103,16 +103,16 @@ spec:
               title: Repo Host
               type: string
               description: Your SCM host
-              default: gitlab-gitlab.apps.cluster-q7zfx.sandbox2589.opentlc.com
+              default: gitlab.com
               enum:
-                - gitlab-gitlab.apps.cluster-q7zfx.sandbox2589.opentlc.com
+                - gitlab.com
             owner:
               title: Repo Owner
               type: string
               description: Your SCM host organization/group
-              default: development
+              default: bellayin
               enum:
-                - development
+                - bellayin
 
   steps:
     - id: template
