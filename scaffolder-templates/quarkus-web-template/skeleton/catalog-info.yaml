@@ -26,7 +26,7 @@ metadata:
 spec:
   type: service
   lifecycle: production
-  owner: ${{values.owner | dump}}
+  owner: bellayin
   providesApis:
     - ${{values.component_id | dump}}
 ---
@@ -40,6 +40,6 @@ metadata:
 spec:
   type: openapi
   lifecycle: production
-  owner: ${{values.owner | dump}}
+  owner: bellayin
   definition:
     $text: ./openapi.yaml
